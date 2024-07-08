@@ -8,6 +8,9 @@ import {
   UserButton
 } from '@clerk/nextjs'
 import "./globals.css";
+import {Toaster} from "@/components/ui/sonner"
+import { ExitModal } from "@/components/modals/exit-modal";
+
 
 const font = Nunito({ subsets: ["latin"] });
 
@@ -25,6 +28,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={font.className}>
+          <Toaster />
+          <ExitModal></ExitModal>
           {children}
         </body>
       </html>

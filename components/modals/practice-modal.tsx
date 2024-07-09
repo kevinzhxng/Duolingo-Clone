@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/dialog"
 
 import {Button} from "@/components/ui/button"
-import { useExitModal } from "@/store/use-exit-modal"
+import { usePracticeModal } from "@/store/use-practice-modal"
 
-export const ExitModal = () => {
+export const PracticeModal = () => {
     const router = useRouter();
     const [isClient, setIsClient] = useState(false);
-    const {isOpen, close} = useExitModal();
+    const {isOpen, close} = usePracticeModal();
 
     useEffect(() => setIsClient(true), [])
 
@@ -33,17 +33,17 @@ export const ExitModal = () => {
                 <DialogHeader>
                     <div className="flex items-center w-full justify-center mb-5">
                         <Image
-                            src="/mascot_sad.svg"
-                            alt="mascot"
-                            height={80}
-                            width={80}
+                            src="/heart.svg"
+                            alt="heart"
+                            height={100}
+                            width={100}
                         />
                     </div>
                     <DialogTitle className="text-center font-bold text-2xl">
-                        WAIT! Don&apos;t go!!!
+                        Practice lesson
                     </DialogTitle>
                     <DialogDescription className="text-center text-base">
-                        You&apos;re about to leave the lesson. Are you sure?
+                        Use practice lessons to regain hearts and points. You cannot lose hearts or points in practice lessons.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="mb-4">
@@ -53,17 +53,7 @@ export const ExitModal = () => {
                         className="w-full"
                         size="lg"
                         onClick={close}>
-                            Keep learning
-                        </Button>
-                        <Button
-                        variant="dangerOutline"
-                        className="w-full"
-                        size="lg"
-                        onClick={() => {
-                            close();
-                            router.push("/learn")
-                        }}>
-                            End session
+                           I understand
                         </Button>
                     </div>
                 </DialogFooter>

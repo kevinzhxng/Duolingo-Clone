@@ -6,6 +6,7 @@ import {
   pgTable,
   serial,
   text,
+  timestamp,
 } from "drizzle-orm/pg-core";
 
 export const courses = pgTable("courses", {
@@ -97,23 +98,23 @@ export const challengeOptionsRelations = relations(
 );
 
 export const challengeProgress = pgTable("challenge_progress", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(), //notnull makes it required TODO confirm it doesnt break
-    challengeId: integer("challenge_id")
-      .references(() => challenges.id, { onDelete: "cascade" })
-      .notNull(),
-      completed: boolean("completed").notNull().default(false)
-  });
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(), //notnull makes it required TODO confirm it doesnt break
+  challengeId: integer("challenge_id")
+    .references(() => challenges.id, { onDelete: "cascade" })
+    .notNull(),
+  completed: boolean("completed").notNull().default(false),
+});
 
 export const challengeProgressRelations = relations(
-    challengeProgress,
-    ({ one }) => ({
-      challenge: one(challenges, {
-        fields: [challengeProgress.challengeId],
-        references: [challenges.id],
-      }),
-    })
-  );
+  challengeProgress,
+  ({ one }) => ({
+    challenge: one(challenges, {
+      fields: [challengeProgress.challengeId],
+      references: [challenges.id],
+    }),
+  })
+);
 
 export const userProgress = pgTable("user_progress", {
   userId: text("user_id").primaryKey(),
@@ -132,3 +133,12 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
     references: [courses.id],
   }),
 }));
+
+export const userSubscription = pgTable("user_subscription", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().unique(),
+  stripeCustomerId: text("stripe_customer_id").notNull().unique(),
+  stripeSubscriptionId: text("stripe_subscription_id").notNull().unique(),
+  stripePriceId: text("stripe_price_id").notNull(),
+  stripeCurrentPeriodEnd: timestamp("stripe_current_period_end").notNull(),
+});

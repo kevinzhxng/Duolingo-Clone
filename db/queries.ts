@@ -218,6 +218,7 @@ export const getLessonPercentage = cache(async () => {
   return percentage;
 });
 
+
 const DAY_IN_MS = 86_400_000;
 export const getUserSubscription = cache(async () => {
   const { userId } = await auth();

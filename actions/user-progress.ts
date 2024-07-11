@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const upsertUserProgress = async (courseId: number) => {
-  const { userId } = await auth();
+  const { userId } = auth();
   const user = await currentUser();
 
   if (!userId || !user) {
@@ -91,7 +91,7 @@ export const reduceHearts = async (challengeId: number) => {
     throw new Error("User progress not found")
   }
 
-  if (!userSubscription?.isActive) {
+  if (userSubscription?.isActive) {
     return { error: "subscription" }
   }
 
@@ -126,7 +126,7 @@ export const refillHearts = async() => {
   }
 
   await db.update(userProgress).set({
-    hearts: 5,
+    hearts: 10,
     points: currentUserProgress.points - POINTS_TO_REFILL,
   }).where(eq(userProgress.userId, currentUserProgress.userId))
 
